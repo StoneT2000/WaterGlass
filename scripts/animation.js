@@ -10,7 +10,7 @@ $(document).on("ready", function(){
   var test = 0;
   repeatSmoke(50);
   //The above tiemout must be such that at any one time, max Particles is 10
-  $(document).mousedown(function(e){
+  $(".container").bind("touchstart mousedown", function(e){
     var offsetx = ($(".container").height()/2 - 4);
     var posx = e.pageY - offsetx + 95;
     var percent = 200- posx;
