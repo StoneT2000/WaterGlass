@@ -10,15 +10,18 @@ $(document).on("ready", function(){
   var test = 0;
   repeatSmoke(50);
   //The above tiemout must be such that at any one time, max Particles is 10
-  $(document).mousemove(function(e){
-    e.pageY;
-    var percent = 1-e.pageY/window.innerHeight;
-    setWaterHeight(180*percent + 10);
-  })
   $(document).mousedown(function(e){
-    e.pageY;
-    var percent = 1-e.pageY/window.innerHeight;
-    setWaterHeight(180*percent + 10);
+    var offsetx = ($(".container").height()/2 - 4);
+    var posx = e.pageY - offsetx + 95;
+    var percent = 200- posx;
+    console.log(offsetx,posx);
+    if (percent < 10){
+      percent = 10;
+    }
+    else if (percent >= 180){
+      percent = 180;
+    }
+    setWaterHeight(percent);
   })
 });
 
@@ -43,13 +46,17 @@ function createSmoke(offx,offy){
   $("#smoke" + thiscount).css("transform","translate(" + ox +"px," + oy +"px) rotate(0deg)");
   ids.push(thiscount);
   window.setTimeout(function(){
-    $("#smoke" + ids[ids.length-1]).css("transform","translate(" + randomx +"px,-300px) rotate(" + randomAngle + "deg)");
-    $("#smoke" + ids[ids.length-1]).css("opacity","0");
+    var smokeE = $("#smoke" + ids[ids.length-1]);
+    smokeE.css("transform","translate(" + randomx +"px,-300px) rotate(" + randomAngle + "deg)");
+    smokeE.css("opacity","0");
+    var rand = Math.random(0,1)*20 + 20
+    smokeE.css("width", rand +"px");
+    smokeE.css("height",rand +"px");
     
   }, 100);
   window.setTimeout(function(){
     $("#smoke" + ids[0]).remove();
-    //console.log("pop!",ids[0])
+
     ids.shift();
     if (count > maxParticles){
       count = 0;
@@ -93,7 +100,7 @@ function toggleFullScreen() {
 }
 
 function repeatSmoke(offy){
-  var timeOut = Math.random(0,1)*400 + 100;
+  var timeOut = Math.random(0,1)*400 + 150;
   smokeTimer = window.setTimeout(function(){
     createSmoke(-20, offy);
     repeatSmoke(offy);
