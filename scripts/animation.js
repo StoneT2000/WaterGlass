@@ -15,6 +15,11 @@ $(document).on("ready", function(){
     var percent = 1-e.pageY/window.innerHeight;
     setWaterHeight(180*percent + 10);
   })
+  $(document).mousedown(function(e){
+    e.pageY;
+    var percent = 1-e.pageY/window.innerHeight;
+    setWaterHeight(180*percent + 10);
+  })
 });
 
 function createSmoke(offx,offy){
